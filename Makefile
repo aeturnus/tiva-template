@@ -23,6 +23,9 @@ TIVAWARE_PATH = "$(HOME)/embedded/tivaware"
 # LD_SCRIPT: linker script
 LD_SCRIPT = $(MCU).ld
 
+# Flashing tool
+FLASH = lm4flash
+
 # define flags
 CFLAGS = -g -mthumb -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp
 CFLAGS +=-Os -ffunction-sections -fdata-sections -MD -std=c99 -Wall
@@ -66,4 +69,7 @@ $(OUTDIR):
 clean:
 	-$(RM) $(OUTDIR)/*
 
-.PHONY: all clean
+flash: $(OUTDIR)/$(TARGET).bin
+	$(FLASH) $(OUTDIR)/$(TARGET).bin
+
+.PHONY: all clean flash
